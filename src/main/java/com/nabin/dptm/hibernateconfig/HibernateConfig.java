@@ -35,7 +35,9 @@ public class HibernateConfig {
     @Bean
     LocalContainerEntityManagerFactoryBean entityManagerFactory(
             DataSource dataSource,
+            //DataSourceBasedMultiTenantConnectionProviderImpl bean
             MultiTenantConnectionProvider multiTenantConnectionProviderImpl,
+            //TenantSchemaResolver bean
             CurrentTenantIdentifierResolver currentTenantIdentifierResolverImpl) {
 
         Map<String, Object> jpaPropertiesMap = new HashMap<>(jpaProperties.getProperties());

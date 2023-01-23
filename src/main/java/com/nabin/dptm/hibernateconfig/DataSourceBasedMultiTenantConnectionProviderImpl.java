@@ -1,6 +1,7 @@
 package com.nabin.dptm.hibernateconfig;
 
 import com.nabin.dptm.tenancy.TenantDataSourceStorage;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.engine.jdbc.connections.spi.AbstractDataSourceBasedMultiTenantConnectionProviderImpl;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,7 @@ import java.util.Map;
  * @since 2023-01-18
  */
 @Component
+@Slf4j
 public class DataSourceBasedMultiTenantConnectionProviderImpl
         extends AbstractDataSourceBasedMultiTenantConnectionProviderImpl {
 
@@ -48,6 +50,7 @@ public class DataSourceBasedMultiTenantConnectionProviderImpl
             TenantDataSourceStorage tenantDataSource = context.getBean(TenantDataSourceStorage.class);
             map.putAll(tenantDataSource.getAll());
         }
+        log.error("Selected datasource is: {}", map.get(tenantIdentifier));
         return map.get(tenantIdentifier) != null ? map.get(tenantIdentifier) : map.get(DEFAULT_TENANT_ID);
     }
 }

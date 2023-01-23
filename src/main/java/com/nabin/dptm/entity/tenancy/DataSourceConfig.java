@@ -36,8 +36,4 @@ public class DataSourceConfig {
 
     @Column(name = "driver_class_name", nullable = false)
     private String driverClassName;
-
-    @Column(nullable = false)
-    private boolean initialize;
-
 }
