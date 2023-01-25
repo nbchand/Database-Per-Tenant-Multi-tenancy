@@ -8,6 +8,7 @@ import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -33,9 +34,12 @@ public class HibernateConfig {
     }
 
     @Bean
+    @DependsOn(value = "flywayMigrationInitializer")
     LocalContainerEntityManagerFactoryBean entityManagerFactory(
             DataSource dataSource,
+            //DataSourceBasedMultiTenantConnectionProviderImpl bean
             MultiTenantConnectionProvider multiTenantConnectionProviderImpl,
+            //TenantSchemaResolver bean
             CurrentTenantIdentifierResolver currentTenantIdentifierResolverImpl) {
 
         Map<String, Object> jpaPropertiesMap = new HashMap<>(jpaProperties.getProperties());
