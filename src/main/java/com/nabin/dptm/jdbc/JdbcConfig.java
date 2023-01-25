@@ -19,7 +19,7 @@ import java.util.List;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class DataSourceConfigJDBC {
+public class JdbcConfig {
 
     private final DataSourceProperties dataSourceProperties;
     private Connection connection;
@@ -40,14 +40,22 @@ public class DataSourceConfigJDBC {
         }
     }
 
-    public List<DataSourceConfig> findAllDataSourceConfig() {
-        String query = "select * from data_source_config";
-        return findDataSourceConfigList(query);
-    }
+    public DataSourceConfig findDataSourceConfig(String query) {
+        DataSourceConfig dataSourceConfig = null;
+        try {
+            createConnection();
+            ResultSet resultSet = statement.executeQuery(query);
+            List<DataSourceConfig> dataSourceConfigList = resultSetToDataSourceConfig(resultSet);
 
-    public List<DataSourceConfig> findNonPublicDataConfigList() {
-        String query = "select * from data_source_config where name not ilike \'public\'";
-        return findDataSourceConfigList(query);
+            if (!dataSourceConfigList.isEmpty()) {
+                dataSourceConfig = dataSourceConfigList.get(0);
+            }
+        } catch (SQLException exception) {
+            log.error("DataSourceConfig can't be fetched from database: {}", exception.getMessage());
+        } finally {
+            closeConnection();
+        }
+        return dataSourceConfig;
     }
 
     public List<DataSourceConfig> findDataSourceConfigList(String query) {
@@ -66,25 +74,6 @@ public class DataSourceConfigJDBC {
         }
 
         return dataSourceConfigList;
-    }
-
-    public DataSourceConfig findDataSourceConfigByName(String name) {
-        DataSourceConfig dataSourceConfig = null;
-        try {
-            createConnection();
-            String query = "select * from data_source_config where name = \'" + name + "\' limit 1";
-            ResultSet resultSet = statement.executeQuery(query);
-            List<DataSourceConfig> dataSourceConfigList = resultSetToDataSourceConfig(resultSet);
-
-            if (!dataSourceConfigList.isEmpty()) {
-                dataSourceConfig = dataSourceConfigList.get(0);
-            }
-        } catch (SQLException exception) {
-            log.error("DataSourceConfig can't be fetched from database: {}", exception.getMessage());
-        } finally {
-            closeConnection();
-        }
-        return dataSourceConfig;
     }
 
     private List<DataSourceConfig> resultSetToDataSourceConfig(ResultSet resultSet) throws SQLException {

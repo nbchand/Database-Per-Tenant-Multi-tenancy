@@ -1,7 +1,7 @@
 package com.nabin.dptm.flyway;
 
 import com.nabin.dptm.entity.tenancy.DataSourceConfig;
-import com.nabin.dptm.jdbc.DataSourceConfigJDBC;
+import com.nabin.dptm.jdbc.DataSourceConfigFetcher;
 import com.nabin.dptm.tenancy.TenantDataSourceStorage;
 import lombok.RequiredArgsConstructor;
 import org.flywaydb.core.Flyway;
@@ -21,13 +21,13 @@ import java.util.stream.Collectors;
 public class FlywayMigrationInitializer {
 
     private final TenantDataSourceStorage tenantDataSourceStorage;
-    private final DataSourceConfigJDBC dataSourceConfigJDBC;
+    private final DataSourceConfigFetcher dataSourceConfigFetcher;
 
     @PostConstruct
     public void migrate() {
         String scriptLocation = "db/migration";
 
-        List<String> datasourceList = dataSourceConfigJDBC.findNonPublicDataConfigList()
+        List<String> datasourceList = dataSourceConfigFetcher.findNonPublicDataConfigList()
                 .stream()
                 .map(DataSourceConfig::getName)
                 .collect(Collectors.toList());
