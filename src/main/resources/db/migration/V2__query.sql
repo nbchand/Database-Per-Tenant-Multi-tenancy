@@ -6,7 +6,4 @@ CREATE TABLE if not exists public.employee
     );
 
 create sequence hibernate_sequence;
--- alter sequence hibernate_sequence owner to postgres;
-
--- insert into employee(id, name, designation)
--- values (nextval('hibernate_sequence'), 'Harry Potter', 'Manager'), (nextval('hibernate_sequence'), 'James Milner', 'Coach');
+alter sequence hibernate_sequence owner to postgres;
