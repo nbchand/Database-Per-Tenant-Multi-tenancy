@@ -41,12 +41,22 @@ public class DataSourceConfigJDBC {
     }
 
     public List<DataSourceConfig> findAllDataSourceConfig() {
+        String query = "select * from data_source_config";
+        return findDataSourceConfigList(query);
+    }
+
+    public List<DataSourceConfig> findNonPublicDataConfigList() {
+        String query = "select * from data_source_config where name not ilike \'public\'";
+        return findDataSourceConfigList(query);
+    }
+
+    public List<DataSourceConfig> findDataSourceConfigList(String query) {
 
         List<DataSourceConfig> dataSourceConfigList;
 
         try {
             createConnection();
-            ResultSet resultSet = statement.executeQuery("select * from data_source_config");
+            ResultSet resultSet = statement.executeQuery(query);
             dataSourceConfigList = resultSetToDataSourceConfig(resultSet);
         } catch (SQLException exception) {
             log.error("DataSourceConfig list can't be fetched from database: {}", exception.getMessage());
