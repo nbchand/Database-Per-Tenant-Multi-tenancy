@@ -90,7 +90,6 @@ public class DataSourceConfigJDBC {
             dataSourceConfig.setName(resultSet.getString("name"));
             dataSourceConfig.setUsername(resultSet.getString("username"));
             dataSourceConfig.setPassword(resultSet.getString("password"));
-            dataSourceConfig.setInitialize(resultSet.getBoolean("initialize"));
 
             dataSourceConfigList.add(dataSourceConfig);
         }

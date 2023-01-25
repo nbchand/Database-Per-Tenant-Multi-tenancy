@@ -50,7 +50,7 @@ public class DataSourceBasedMultiTenantConnectionProviderImpl
             TenantDataSourceStorage tenantDataSource = context.getBean(TenantDataSourceStorage.class);
             map.putAll(tenantDataSource.getAll());
         }
-        log.error("Selected datasource is: {}", map.get(tenantIdentifier));
+        log.info("Selected datasource is: {}", map.get(tenantIdentifier));
         return map.get(tenantIdentifier) != null ? map.get(tenantIdentifier) : map.get(DEFAULT_TENANT_ID);
     }
 }
