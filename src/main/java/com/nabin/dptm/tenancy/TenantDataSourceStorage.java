@@ -37,6 +37,16 @@ public class TenantDataSourceStorage {
         return dataSource;
     }
 
+    public DataSource getPublicDatasource() {
+        return DataSourceBuilder
+                .create()
+                .driverClassName("org.postgresql.Driver")
+                .username("postgres")
+                .password("postgres")
+                .url("jdbc:postgresql://localhost:5432/test")
+                .build();
+    }
+
     /**
      * We will load the connection details during server startup using @PostConstruct.
      *
