@@ -1,4 +1,4 @@
-package com.nabin.dptm.hibernateconfig;
+package com.nabin.dptm.jpaconfig;
 
 import lombok.RequiredArgsConstructor;
 import org.hibernate.MultiTenancyStrategy;
@@ -24,7 +24,7 @@ import java.util.Map;
  */
 @Configuration
 @RequiredArgsConstructor
-public class HibernateConfig {
+public class JpaConfig {
 
     private final JpaProperties jpaProperties;
 

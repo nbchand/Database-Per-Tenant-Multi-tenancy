@@ -1,4 +1,4 @@
-package com.nabin.dptm.hibernateconfig;
+package com.nabin.dptm.jpaconfig;
 
 import com.nabin.dptm.tenancy.TenantDataSourceStorage;
 import lombok.extern.slf4j.Slf4j;

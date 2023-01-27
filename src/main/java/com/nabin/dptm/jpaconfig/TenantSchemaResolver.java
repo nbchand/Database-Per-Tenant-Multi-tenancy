@@ -1,4 +1,4 @@
-package com.nabin.dptm.hibernateconfig;
+package com.nabin.dptm.jpaconfig;
 
 import com.nabin.dptm.tenancy.TenantContext;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
